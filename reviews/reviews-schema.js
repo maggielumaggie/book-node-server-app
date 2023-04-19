@@ -5,7 +5,7 @@ const reviewsSchema = new mongoose.Schema(
       book_id: String,
       author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'UsersModel'
       }
     },
     { collection: "reviews" }

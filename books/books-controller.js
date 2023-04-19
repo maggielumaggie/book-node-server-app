@@ -1,8 +1,5 @@
 import * as dao from './books-dao.js'
-
-
 export const getBooks = () => books;
-
 const BooksController = (app) => {
 
   const createBook   = async (req, res) => {
@@ -14,28 +11,23 @@ const BooksController = (app) => {
     const booksInDatabase = await dao.findBook()
     res.send(booksInDatabase)
   }
-  export const updateBook = async (req, res) => {
-    const { id } = req.params;
-    const { book } = req.body;
-    try {
-      const status = await dao.updateBook({ _id: id }, book);
-      res.status(200).json(status);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Failed to update book" });
-    }
+  const updateBook = async (req, res) => {
+    const bid = req.params['bid']
+    const bookUpdates = req.body
+    const status = await dao.updateBook(bid, bookUpdates)
+    res.send(status)
   };
 
-  const deleteBook   = async (req, res) => {
-    const mid = req.params['mid']
-    const status = await dao.deleteBook(mid)
+  const deleteBook  = async (req, res) => {
+    const bid = req.params['bid']
+    const status = await dao.deleteBook(bid)
     res.send(status)
   }
 
   app.post  ('/books', createBook)
   app.get   ('/books', findBook)
-  app.put   ('/books/:mid', updateBook)
-  app.delete('/books/:mid', deleteBook)
+  app.put   ('/books/:bid', updateBook)
+  app.delete('/books/:bid', deleteBook)
 }
 
 export default BooksController;

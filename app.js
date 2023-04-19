@@ -9,7 +9,7 @@ import FollowsController from "./follows/follows-controller.js";
 import mongoose from "mongoose";
 import session from "express-session";
 
-mongoose.connect("mongodb://127.0.0.1:27017/books");
+mongoose.connect("mongodb+srv://maggielu:maggieissmart@cluster0.cgt2jhs.mongodb.net/books?retryWrites=true&w=majority");
 
 
 const app = express();

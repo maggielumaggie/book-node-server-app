@@ -4,13 +4,13 @@ export const createBook = async (book) => {
   return booksModel.create(book);
 };
 
-export const deleteBook = async (id) => {
-  const status = await booksModel.deleteOne({ _id: id });
+export const deleteBook = async (bid) => {
+  const status = await booksModel.deleteOne({ book_id: bid });
   return status;
 };
 
-export const updateBook = async (id, book) => {
-  const status = await booksModel.updateOne({ _id: id }, book);
+export const updateBook = async (bid, book) => {
+  const status = await booksModel.updateOne({ book_id: bid }, book);
   return status;
 };
 

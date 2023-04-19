@@ -3,22 +3,34 @@ const FollowsController = (app) => {
   const followUser = async (req, res) => {
     const follow = req.body
     const currentUser = req.session['currentUser']
-    follow.follower = currentUser._id
+    console.log('req.session:', req.session);
+    console.log('currentUser:', currentUser);
+    follow.follower = currentUser.user_id
     const actualFollow = await dao.followUser(follow)
     res.json(actualFollow)
   }
+
+  const unFollowUser = async (req, res) => {
+    const follow = req.body
+    const currentUser = req.session['currentUser']
+    follow.follower = currentUser.user_id
+    const actualFollow = await dao.unFollowUser(follow)
+    res.json(actualFollow)
+  }
+
   const findFollowers = async (req, res) => {
     const followed = req.params.followed
-    const followers = await dao.findFollowers(followed)
+    const followers = await dao.findFollowersByFollowedId(followed)
     res.json(followers)
   }
   const findFollowing = async (req, res) => {
     const follower = req.params.follower
-    const followed = await dao.findFollowing(follower)
+    const followed = await dao.findFollowingByFollowerId(follower)
     res.json(followed)
   }
 
   app.post('/follows', followUser)
+  app.delete('/follows/:follower:', unFollowUser)
   app.get('/users/:followed/followers', findFollowers)
   app.get('/users/:follower/following', findFollowing)
 }

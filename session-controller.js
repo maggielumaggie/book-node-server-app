@@ -14,9 +14,9 @@ const SessionController = (app) => {
     req.session.destroy();
     res.send(200);
   };
-  app.get("/api/session/set/:key/:value", storeInSession);
-  app.get("/api/session/get/:key", getFromSession);
-  app.get("/api/session/clear", clearSession);
+  app.get("session/set/:key/:value", storeInSession);
+  app.get("session/get/:key", getFromSession);
+  app.get("session/clear", clearSession);
 };
 
 export default SessionController;
