@@ -5,12 +5,12 @@ export const createBook = async (book) => {
 };
 
 export const deleteBook = async (bid) => {
-  const status = await booksModel.deleteOne({ book_id: bid });
+  const status = await booksModel.deleteOne({ _id: bid });
   return status;
 };
 
 export const updateBook = async (bid, book) => {
-  const status = await booksModel.updateOne({ book_id: bid }, book);
+  const status = await booksModel.updateOne({ _id: bid }, book);
   return status;
 };
 

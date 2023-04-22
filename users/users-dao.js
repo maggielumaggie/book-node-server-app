@@ -21,7 +21,7 @@ export const findAllByRole = async (role) => {
 };
 
 export const findUserById = async (uid) => {
-  const user = await usersModel.findById({user_id : uid}, {password: false});
+  const user = await usersModel.findById({_id : uid}, {password: false});
   return user;
 };
 
@@ -36,7 +36,7 @@ export const findUserByCredentials = async (username, password) => {
 };
 
 export const deleteUser = async (uid) => {
-  const status = await usersModel.deleteOne({ user_id: uid });
+  const status = await usersModel.deleteOne({ _id: uid });
   return status;
 };
 
@@ -46,6 +46,6 @@ export const createUser = async (user) => {
 };
 
 export const updateUser = async (uid, user) => {
-  const status = await usersModel.updateOne({ user_id: uid }, user);
+  const status = await usersModel.updateOne({ _id: uid }, user);
   return status;
 };

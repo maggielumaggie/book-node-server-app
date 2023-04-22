@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 const booksSchema = new mongoose.Schema(
     {
-      _id: String,
-      book_id: Number,
       name: String,
       cover: String,
       url: String,
