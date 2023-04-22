@@ -37,35 +37,37 @@ function UsersController(app) {
     const username = user.username;
     const password = user.password;
     const foundUser = await dao.findUserByCredentials(
-        req.body.username,
-        req.body.password
+        username,
+        password
     );
-    const match = await bcrypt.compare(password, foundUser.password);
-    if (match) {
+    //const match = await bcrypt.compare(password, foundUser.password);
+    if (foundUser) {
       foundUser.password = '*****';
-      req.session["currentUser"] = foundUser;
+      req.session.currentUser = foundUser;
+      console.log(req.session.currentUser)
       res.json(foundUser);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(403);
     }
   };
   const logout = async (req, res) => {
     req.session.destroy();
-    res.sendStatus(204);
+    res.sendStatus(200);
   };
   const profile = async (req, res) => {
-    const currentUser = req.session["currentUser"];
+    const currentUser = req.session.currentUser;
+    console.log(req.session)
     if (currentUser) {
       res.send(currentUser);
     } else {
-      res.sendStatus(404);
+      res.sendStatus(403);
     }
   };
   const register = async (req, res) => {
     const user = req.body;
     const password = user.password;
-    const hash = await bcrypt.hash(password, saltRounds);
-    user.password = hash;
+    //const hash = await bcrypt.hash(password, saltRounds);
+    user.password = password;
 
     const foundUser = await dao.findUserByUsername(req.body.username);
     if (foundUser) {

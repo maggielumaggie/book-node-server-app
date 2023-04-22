@@ -1,5 +1,4 @@
 import {getBooks} from "../books/books-controller.js";
-import users from "../users/users.js";
 import * as dao from "./likes-dao.js";
 import session from "express-session";
 
