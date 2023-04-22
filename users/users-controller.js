@@ -92,7 +92,7 @@ function UsersController(app) {
   app.post('/register', register)
   app.post('/login', login)
   app.post('/logout', logout)
-  app.post('/profile', profile)
+  app.get('/profile', profile)
 }
 
 export default UsersController;

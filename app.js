@@ -25,8 +25,8 @@ app.use(
     session({
       secret: "process.env.SECRET",
       resave: false,
-      saveUninitialized: false,
-      cookie: { secure: true }
+      saveUninitialized: true,
+      cookie: { secure: false }
     })
 );
 
@@ -37,4 +37,4 @@ UsersController(app);
 ReviewsController(app);
 FollowsController(app);
 
-app.listen(5000);
+app.listen(4000);
