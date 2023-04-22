@@ -44,6 +44,7 @@ function UsersController(app) {
     if (foundUser) {
       foundUser.password = '*****';
       req.session.currentUser = foundUser;
+      console.log(req.session)
       console.log(req.session.currentUser)
       res.json(foundUser);
     } else {
@@ -77,6 +78,7 @@ function UsersController(app) {
       const currentUser = await dao.createUser(user);
       currentUser.password = '*****';
       req.session["currentUser"] = currentUser;
+      console.log(req.session)
       res.json(currentUser);
     }
   };

@@ -1,11 +1,6 @@
 import likesModel from "./likes-model.js";
 
 export const userLikesBook = async (uid, bid) => {
-
-  uid = "643f21f108499e78a8045a5a"
-  bid = "643ccb583d027b0a72a6102c"
-  console.log(uid)
-  console.log(bid)
   const status = await likesModel.create({user: uid, book: bid})
   return status;
 }

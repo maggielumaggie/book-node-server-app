@@ -33,9 +33,7 @@ const LikesController = (app) => {
   app.get('/print-session', printSession);
 
   const userLikesBook = async (req, res) => {
-    req.session.currentUser = {uid: 2}
     console.log(req.session)
-    //const uid = req.params.uid
     const uid = req.session['currentUser'].uid
     const bid = req.params.bid
     console.log(bid)
