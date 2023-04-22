@@ -1,6 +1,7 @@
 import {getBooks} from "../books/books-controller.js";
 import users from "../users/users.js";
 import * as dao from "./likes-dao.js";
+import session from "express-session";
 
 let likes = [
   {_id: '123', user_id: '111', book_id: '123'},
@@ -24,24 +25,36 @@ const LikesController = (app) => {
     })
     return populatedResults
   }
-  const userLikesBook = async (req, res) => {
-    // const uid = req.params.uid
-    const uid = req.session['currentUser'].user_id
-    const mid = req.params.mid
 
-    const newLike = await dao.userLikesBook(uid, mid)
+  const printSession = (req, res) => {
+    console.log(req.session); // print session object to console
+    res.json(req.session); // send session object as a response
+  };
+
+  app.get('/print-session', printSession);
+
+  const userLikesBook = async (req, res) => {
+    req.session.currentUser = {uid: 123}
+    console.log(req.session)
+    //const uid = req.params.uid
+    const uid = req.session['currentUser'].id
+    const bid = req.params.bid
+
+    const newLike = await dao.userLikesBook(uid, bid)
     // likes.push(newLike)
     res.json(newLike)
   }
+
+
   const userUnlikesBook= async (req, res) => {
     // const uid = req.params.uid
-    // const mid = req.params.mid
+    // const bid = req.params.bid
 
-    const {uid, mid} = req.params
+    const {uid, bid} = req.params
 
-    const status = await dao.userUnlikesBook(uid, mid)
+    const status = await dao.userUnlikesBook(uid, bid)
 
-    // likes = likes.filter((l) => l.user !== uid && l.movie !== mid)
+    // likes = likes.filter((l) => l.user !== uid && l.movie !== bid)
     res.send(status)
   }
   const findAllLikes = async (req, res) => {
@@ -62,11 +75,11 @@ const LikesController = (app) => {
     // res.json(populatedbooks)
   }
   const findUsersWhoLikedBook= async (req, res) => {
-    const mid = req.params.mid
-    const users = await dao.findUsersThatLikeBook(mid)
+    const bid = req.params.bid
+    const users = await dao.findUsersThatLikeBook(bid)
     res.json(users)
 
-    // const usersWhoLikeMovie = likes.filter((like) => like.movie === mid)
+    // const usersWhoLikeMovie = likes.filter((like) => like.movie === bid)
     // const populateUsers = populate({
     //     rawResults: usersWhoLikeMovie,
     //     fieldToPopulate: 'user',
@@ -76,11 +89,11 @@ const LikesController = (app) => {
     // res.json(populateUsers)
   }
 
-  app.post('/users/likes/:mid', userLikesBook)
-  app.delete('/users/unlikes/:mid', userUnlikesBook)
+  app.post('/users/likes/:bid', userLikesBook)
+  app.delete('/users/unlikes/:bid', userUnlikesBook)
   app.get('/likes', findAllLikes)
   app.get('/users/:uid/likes', findBooksLikedByUser)
-  app.get('/books/:mid/likes', findUsersWhoLikedBook)
+  app.get('/books/:bid/likes', findUsersWhoLikedBook)
   // app.put(updateLike)
 }
 

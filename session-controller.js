@@ -1,22 +1,22 @@
-const SessionController = (app) => {
-  const storeInSession = (req, res) => {
-    const key = req.params.key;
-    const value = req.params.value;
-    req.session[key] = value;
-    res.send(req.session);
-  };
-  const getFromSession = (req, res) => {
-    const key = req.params.key;
-    const value = req.session[key];
-    res.send(value);
-  };
-  const clearSession = (req, res) => {
-    req.session.destroy();
-    res.send(200);
-  };
-  app.get("session/set/:key/:value", storeInSession);
-  app.get("session/get/:key", getFromSession);
-  app.get("session/clear", clearSession);
-};
 
-export default SessionController;
+
+
+const SessionController = (app) => {
+  const setSession = (req, res) => {
+    const name = req.params.name;
+    const value = req.params.value
+    req.session[name] = value
+    //req.session["currentUser"] = 1
+    res.send(req.session)
+  }
+  const getSession = (req, res) => {
+    const name = req.params.name
+    const value = req.session[name]
+    res.send(value)
+  }
+
+  app.get('/session/set/:name/:value', setSession)
+  app.get('/session/get/:name', getSession)
+}
+
+export default SessionController
