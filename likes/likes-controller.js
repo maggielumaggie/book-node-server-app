@@ -25,20 +25,10 @@ const LikesController = (app) => {
     return populatedResults
   }
 
-  const printSession = (req, res) => {
-    console.log(req.session); // print session object to console
-    res.json(req.session); // send session object as a response
-  };
-
-  app.get('/print-session', printSession);
 
   const userLikesBook = async (req, res) => {
-    console.log(req.session)
     const uid = req.session['currentUser'].uid
     const bid = req.params.bid
-    console.log(bid)
-
-
     const newLike = await dao.userLikesBook(uid, bid)
     // likes.push(newLike)
     res.json(newLike)
@@ -46,10 +36,9 @@ const LikesController = (app) => {
 
 
   const userUnlikesBook= async (req, res) => {
-    // const uid = req.params.uid
-    // const bid = req.params.bid
 
-    const {uid, bid} = req.params
+    const uid = req.session['currentUser'].uid
+    const bid = req.params.bid
 
     const status = await dao.userUnlikesBook(uid, bid)
 
@@ -78,14 +67,6 @@ const LikesController = (app) => {
     const users = await dao.findUsersThatLikeBook(bid)
     res.json(users)
 
-    // const usersWhoLikeMovie = likes.filter((like) => like.movie === bid)
-    // const populateUsers = populate({
-    //     rawResults: usersWhoLikeMovie,
-    //     fieldToPopulate: 'user',
-    //     sourceData: users,
-    //     sourceField: '_id'
-    // })
-    // res.json(populateUsers)
   }
 
   app.post('/users/likes/:bid', userLikesBook)
@@ -93,7 +74,6 @@ const LikesController = (app) => {
   app.get('/likes', findAllLikes)
   app.get('/users/:uid/likes', findBooksLikedByUser)
   app.get('/books/:bid/likes', findUsersWhoLikedBook)
-  // app.put(updateLike)
 }
 
 export default LikesController;

@@ -30,6 +30,9 @@ app.use(
     })
 );
 
+
+console.log(process.env.SECRET)
+
 SessionController(app);
 BooksController(app);
 LikesController(app);

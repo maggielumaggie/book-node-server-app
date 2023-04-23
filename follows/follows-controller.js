@@ -3,9 +3,12 @@ const FollowsController = (app) => {
   const followUser = async (req, res) => {
     const follow = req.body
     const currentUser = req.session['currentUser']
-    console.log('req.session:', req.session);
-    console.log('currentUser:', currentUser);
-    follow.follower = currentUser.user_id
+    follow.follower = currentUser._id
+    const followed = await dao.findFollowingByFollowerId(follow.follower)
+    if(followed._id === req.body.followed._id){
+      res.status(409).send('Conflict')
+      return
+    }
     const actualFollow = await dao.followUser(follow)
     res.json(actualFollow)
   }
@@ -13,7 +16,7 @@ const FollowsController = (app) => {
   const unFollowUser = async (req, res) => {
     const follow = req.body
     const currentUser = req.session['currentUser']
-    follow.follower = currentUser.user_id
+    follow.follower = currentUser._id
     const actualFollow = await dao.unFollowUser(follow)
     res.json(actualFollow)
   }

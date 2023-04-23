@@ -64,6 +64,16 @@ function UsersController(app) {
       res.sendStatus(403);
     }
   };
+
+  const currentUser = async (req, res) => {
+    const currentUser = req.session.currentUser;
+    console.log(req.session)
+    if (currentUser) {
+      res.send(currentUser);
+    } else {
+      res.sendStatus(403);
+    }
+  };
   const register = async (req, res) => {
     const user = req.body;
     const password = user.password;
@@ -93,6 +103,7 @@ function UsersController(app) {
   app.post('/login', login)
   app.post('/logout', logout)
   app.get('/profile', profile)
+  app.get('/currentUser', currentUser)
 }
 
 export default UsersController;

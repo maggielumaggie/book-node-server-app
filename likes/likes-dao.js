@@ -1,21 +1,23 @@
 import likesModel from "./likes-model.js";
 
-export const userLikesBook = async (uid, bid) => {
-  const status = await likesModel.create({user: uid, book: bid})
+  export const userLikesBook = async (uid, bid) => {
+  const status = await likesModel.create({user: uid, book_id: bid})
   return status;
 }
 export const userUnlikesBook = async(uid, bid) => {
-  const status = await likesModel.deleteOne({user: uid, book: bid})
+  const status = await likesModel.deleteOne({user: uid, book_id: bid})
   return status;
 }
 export const findBooksLikedByUser = async(uid) => {
-  return await likesModel
-  .find({user_id: uid}, {user: false})
-  .populate('Book', 'title')
+  const x = await likesModel
+  .find({user: uid}, {user: false})
   .exec()
+  console.log(x)
+  return x;
+
 }
 export const findUsersThatLikeBook = async(bid) => {
-  return await likesModel.find({book: bid}, {book: false})
+  return await likesModel.find({book_id: bid}, {book: false})
   .populate('user', 'username')
   .exec()
 }

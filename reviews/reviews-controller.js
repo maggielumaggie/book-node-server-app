@@ -9,7 +9,7 @@ const ReviewsController = (app) => {
   }
 
   const findReviewsByBook = async (req, res) => {
-    const bookID = req.params.book_id
+    const bookID = req.params._id
     const reviews = await dao.findReviewsByBook(bookID)
     res.json(reviews)
   }
