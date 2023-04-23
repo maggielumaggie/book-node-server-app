@@ -6,7 +6,7 @@ export const createReview = async (review) => {
 
 export const findReviewsByBook = (bookID) =>
     reviewsModel
-    .find({bookID})
+    .find({'book_id':{$eq:bookID}})
     .populate('author')
     .exec()
 

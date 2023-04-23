@@ -27,7 +27,7 @@ const LikesController = (app) => {
 
 
   const userLikesBook = async (req, res) => {
-    const uid = req.session['currentUser'].uid
+    const uid = req.session['currentUser']._id
     const bid = req.params.bid
     const newLike = await dao.userLikesBook(uid, bid)
     // likes.push(newLike)
@@ -37,7 +37,7 @@ const LikesController = (app) => {
 
   const userUnlikesBook= async (req, res) => {
 
-    const uid = req.session['currentUser'].uid
+    const uid = req.session['currentUser']._id
     const bid = req.params.bid
 
     const status = await dao.userUnlikesBook(uid, bid)
@@ -50,7 +50,7 @@ const LikesController = (app) => {
     res.json(likes)
   }
   const findBooksLikedByUser = async (req, res) => {
-    const uid = req.params.uid
+    const uid = req.params._id
     const books = await dao.findBooksLikedByUser(uid)
     res.json(books)
     // const books = likes.filter((like) => like.user === uid)
