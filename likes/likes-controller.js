@@ -50,8 +50,12 @@ const LikesController = (app) => {
     res.json(likes)
   }
   const findBooksLikedByUser = async (req, res) => {
-    const uid = req.params._id
-    const books = await dao.findBooksLikedByUser(uid)
+    var uid = req.params.uid
+    if (uid == 'unknown') {
+      uid = undefined
+    }
+    const _id = uid || req.session['currentUser'] && req.session['currentUser']._id || undefined
+    const books = await dao.findBooksLikedByUser(_id)
     res.json(books)
     // const books = likes.filter((like) => like.user === uid)
     // const populatedbooks = populate({
