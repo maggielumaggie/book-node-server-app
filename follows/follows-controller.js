@@ -32,8 +32,8 @@ const FollowsController = (app) => {
     res.json(followed)
   }
 
-  app.post('/follows', followUser)
-  app.delete('/follows/:follower', unFollowUser)
+  app.post('/follow', followUser)
+  app.post('/unfollow', unFollowUser)
   app.get('/users/:followed/followers', findFollowers)
   app.get('/users/:follower/following', findFollowing)
 }
