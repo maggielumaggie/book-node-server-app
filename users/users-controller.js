@@ -42,7 +42,7 @@ function UsersController(app) {
     );
     //const match = await bcrypt.compare(password, foundUser.password);
     if (foundUser) {
-      foundUser.password = '*****';
+      //foundUser.password = '*****';
       req.session.currentUser = foundUser;
       console.log(req.session)
       console.log(req.session.currentUser)
@@ -86,7 +86,7 @@ function UsersController(app) {
       return;
     } else {
       const currentUser = await dao.createUser(user);
-      currentUser.password = '*****';
+      //currentUser.password = '*****';
       req.session["currentUser"] = currentUser;
       console.log(req.session)
       res.json(currentUser);

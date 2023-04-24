@@ -8,6 +8,11 @@ const usersSchema = new mongoose.Schema(
       email: { type: String },
       age: Number,
       role: { type: String, default: "USER", enum: ["USER", "ADMIN", "AUTHOR"] },
+      dateOfBirth: String,
+      joinDate: String,
+      avatarIcon: String,
+      backgroundImage: String,
+      bio: String
     },
     {
       collection: "users",
